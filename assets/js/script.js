@@ -1,21 +1,26 @@
 //Programar una función IIFE para ser invocada al cargar nuestra página.
-(async () => {
-    const url = 'https://randomuser.me/api/?results=10';
-    // bloque Try
-    try {
-        const response = await fetch(url); //método fetch mediante la instrucción await
-        const data = await response.json();
+const datosAPI = (() => {
+    return {
+        peticionAPI: async () => {
+            const url = 'https://randomuser.me/api/?results=10';
+            // bloque Try
+            try {
+                const response = await fetch(url); //método fetch mediante la instrucción await
+                const data = await response.json();
 
-        //funcion que muestra la informacion de 10 usuarios en html utilizando etiquetas del tipo párrafo 
-        //una bajo la otra
-        mostrarResultado(data);
+                //funcion que muestra la informacion de 10 usuarios en html utilizando etiquetas del tipo párrafo 
+                //una bajo la otra
+                mostrarResultado(data);
 
-    } catch (error) { // bloque Catch
-        console.error('Error al obtener datos:', error);
-        throw error; // Manejamos el error y lo propagamos
+            } catch (error) { // bloque Catch
+                console.error('Error al obtener datos:', error);
+                throw error; // Manejamos el error y lo propagamos
+            }
+        }
     }
-}
-)();
+})();
+
+datosAPI.peticionAPI()
 
 const mostrarResultado = (data) => {
     for (var i = 0; i < data.results.length; i++) {
